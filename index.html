@@ -705,6 +705,10 @@
                     btn.classList.add('active');
                     currentMode = btn.dataset.mode;
                     renderAllLocations();
+                    // Refresh location check results if a location was checked
+                    if (lastCheckedCoords) {
+                        checkLocationCoverage(lastCheckedCoords.lat, lastCheckedCoords.lon);
+                    }
                 });
             });
         }
@@ -793,6 +797,7 @@
 
         // ==================== Location Checking ====================
         let userMarker = null;
+        let lastCheckedCoords = null;  // Store last checked location for mode changes
 
         // Add click handler to map after init
         setTimeout(() => {
@@ -878,6 +883,7 @@
         }
 
         function checkLocationCoverage(lat, lon) {
+            lastCheckedCoords = { lat, lon };  // Store for mode changes
             const results = [];
             const point = [lon, lat]; // GeoJSON uses [lon, lat]
 
@@ -947,19 +953,20 @@
         function displayResults(results) {
             const container = document.getElementById('locationResults');
             const modeLabels = {
-                'driving-car': { icon: '🚗', label: 'Drive' },
-                'foot-walking': { icon: '🚶', label: 'Walk' },
-                'cycling-regular': { icon: '🚲', label: 'Cycle' }
+                'driving-car': { icon: '🚗', label: 'car', verb: 'driving' },
+                'foot-walking': { icon: '🚶', label: 'foot', verb: 'walking' },
+                'cycling-regular': { icon: '🚲', label: 'bike', verb: 'cycling' }
             };
 
             const currentModeKey = currentMode;
+            const modeInfo = modeLabels[currentModeKey];
 
-            let html = '<div class="location-results-header">Travel time from your location:</div>';
+            let html = `<div class="location-results-header">Travel time by ${modeInfo.label} ${modeInfo.icon}</div>`;
 
             results.forEach(result => {
                 const time = result.times[currentModeKey];
                 const isReachable = time !== null;
-                const timeLabel = time ? `${time / 60} min` : '> 60 min';
+                const timeLabel = time ? `${time / 60} min ${modeInfo.verb}` : `> 60 min ${modeInfo.verb}`;
 
                 html += `
                     <div class="result-item ${isReachable ? 'reachable' : 'not-reachable'}">
