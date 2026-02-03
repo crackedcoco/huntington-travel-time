@@ -345,6 +345,24 @@
             background: #e8e8e8;
         }
 
+        .floating-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            padding: 1rem;
+            width: 280px;
+            max-height: calc(100% - 20px);
+            overflow-y: auto;
+        }
+
+        .floating-panel .panel-title {
+            margin-bottom: 0.75rem;
+        }
+
         .info-banner {
             background: rgba(82, 168, 57, 0.1);
             border: 1px solid #52a839;
@@ -551,15 +569,6 @@
 
     <div class="main-container">
         <aside class="sidebar">
-            <div class="panel check-location-panel">
-                <div class="panel-title">Check Your Location</div>
-                <button class="location-action-btn" onclick="useMyLocation()">
-                    <span class="icon">📍</span> Use My Location
-                </button>
-                <div class="or-divider">or click anywhere on the map</div>
-                <div id="locationResults" class="location-results"></div>
-            </div>
-
             <div class="panel">
                 <div class="panel-title">Locations</div>
                 <div class="location-buttons" id="locationButtons"></div>
@@ -638,6 +647,14 @@
 
         <main class="map-container">
             <div id="map"></div>
+            <div class="floating-panel check-location-panel">
+                <div class="panel-title">Check Your Location</div>
+                <button class="location-action-btn" onclick="useMyLocation()">
+                    <span class="icon">📍</span> Use My Location
+                </button>
+                <div class="or-divider">or click anywhere on the map</div>
+                <div id="locationResults" class="location-results"></div>
+            </div>
         </main>
     </div>
 
