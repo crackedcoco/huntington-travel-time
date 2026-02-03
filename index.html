@@ -31,6 +31,12 @@
             align-items: center;
         }
 
+        .header-main {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
         header h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem;
@@ -38,90 +44,84 @@
             color: #fff;
         }
 
-        header p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        header .credit {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.6);
-            margin-top: 0.5rem;
-        }
-
-        header .credit a {
-            color: #52a839;
-            text-decoration: none;
-        }
-
-        header .credit a:hover {
-            text-decoration: underline;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-links a {
+        .header-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
             color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
             transition: all 0.2s;
         }
 
-        .nav-links a:hover {
+        .header-toggle:hover {
+            background: rgba(255,255,255,0.2);
             color: #fff;
-            background: #293bb9;
         }
 
-        .intro-section {
+        .header-credit {
+            text-align: right;
+        }
+
+        .header-credit span {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-credit a {
+            color: #52a839;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .header-credit a:hover {
+            text-decoration: underline;
+        }
+
+        .header-dropdown {
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
+            max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
-            max-height: 400px;
         }
 
-        .intro-section.collapsed {
-            max-height: 60px;
-            overflow: hidden;
+        .header-dropdown.expanded {
+            max-height: 500px;
         }
 
-        .intro-section.collapsed .intro-content {
-            padding: 0.75rem 2rem;
-        }
-
-        .intro-section.collapsed .intro-content > *:not(.intro-toggle) {
-            display: none;
-        }
-
-        .intro-section.collapsed .intro-toggle {
-            margin-top: 0;
-        }
-
-        .intro-section.collapsed .intro-toggle .show-text {
-            display: none;
-        }
-
-        .intro-section.collapsed .intro-toggle .hide-text {
-            display: inline;
-        }
-
-        .intro-section .intro-toggle .hide-text {
-            display: none;
-        }
-
-        .intro-content {
+        .dropdown-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1.5rem 2rem;
         }
 
-        .intro-content h2 {
+        .dropdown-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .dropdown-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #293bb9;
+            margin-bottom: 0.75rem;
+        }
+
+        .dropdown-content > p {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .intro-points h2 {
             font-family: 'Montserrat', sans-serif;
             color: #293bb9;
             font-size: 1.25rem;
@@ -162,32 +162,19 @@
             line-height: 1.4;
         }
 
-        .intro-toggle {
-            background: none;
-            border: none;
-            color: #293bb9;
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0.5rem 0;
-            text-decoration: underline;
-        }
-
-        .intro-toggle:hover {
-            color: #ed7200;
-        }
-
         .main-container {
             display: grid;
             grid-template-columns: auto 1fr;
             height: calc(100vh - 80px);
+            transition: height 0.3s ease;
         }
 
-        .intro-section + .main-container {
-            height: calc(100vh - 80px - 200px);
+        .header-dropdown + .main-container {
+            height: calc(100vh - 80px);
         }
 
-        .intro-section.collapsed + .main-container {
-            height: calc(100vh - 80px - 50px);
+        .header-dropdown.expanded + .main-container {
+            height: calc(100vh - 80px - 300px);
         }
 
         .sidebar {
@@ -650,18 +637,21 @@
 </head>
 <body>
     <header>
-        <div>
+        <div class="header-main">
             <h1>Travel Time Maps - Huntington Area</h1>
-            <p>Pre-cached isochrone data for popular locations</p>
-            <p class="credit">Presented by <a href="https://huntington-analytics.com">huntington-analytics.com</a></p>
+            <button class="header-toggle" onclick="document.querySelector('.header-dropdown').classList.toggle('expanded')">
+                <span class="toggle-text">About This Tool ▼</span>
+            </button>
         </div>
-        <nav class="nav-links">
-            <a href="https://github.com/crackedcoco/huntington-travel-time">View on GitHub</a>
-        </nav>
+        <div class="header-credit">
+            <span>Presented by</span>
+            <a href="https://huntington-analytics.com">huntington-analytics.com</a>
+        </div>
     </header>
 
-    <div class="intro-section collapsed">
-        <div class="intro-content">
+    <div class="header-dropdown">
+        <div class="dropdown-content">
+            <p class="dropdown-subtitle">Pre-cached isochrone data for popular Huntington area locations</p>
             <h2>Understanding Travel Time for Business Success</h2>
             <p>Travel time isochrones reveal the true reach of your business location. Unlike simple radius maps, isochrones show the actual areas reachable within specific time frames—accounting for road networks, traffic patterns, and geographic barriers.</p>
             <div class="intro-points">
@@ -682,10 +672,6 @@
                     <span>Compare accessibility against competitors to find strategic opportunities</span>
                 </div>
             </div>
-            <button class="intro-toggle" onclick="this.parentElement.parentElement.classList.toggle('collapsed')">
-                <span class="show-text">Hide Introduction</span>
-                <span class="hide-text">Show Introduction</span>
-            </button>
         </div>
     </div>
 
