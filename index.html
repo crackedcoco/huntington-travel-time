@@ -793,9 +793,20 @@
             });
         }, 100);
 
+        function showLocationError(message) {
+            const resultsDiv = document.getElementById('locationResults');
+            resultsDiv.classList.add('active');
+            resultsDiv.innerHTML = `
+                <div class="location-error">
+                    <p style="color: #e74c3c; margin-bottom: 10px;"><strong>Location Error</strong></p>
+                    <p style="font-size: 13px; color: #666;">${message}</p>
+                </div>
+            `;
+        }
+
         function useMyLocation() {
             if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser');
+                showLocationError('Geolocation is not supported by your browser. Try clicking on the map instead.');
                 return;
             }
 
@@ -813,9 +824,24 @@
                     btn.disabled = false;
                 },
                 (error) => {
-                    alert('Unable to get your location: ' + error.message);
                     btn.innerHTML = '<span class="icon">📍</span> Use My Location';
                     btn.disabled = false;
+
+                    let message = '';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            message = 'Location permission denied. Please allow location access in your browser, or click on the map to select a location.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            message = 'Location unavailable. This often happens on non-HTTPS sites. Try clicking directly on the map to select your location.';
+                            break;
+                        case error.TIMEOUT:
+                            message = 'Location request timed out. Try clicking on the map instead.';
+                            break;
+                        default:
+                            message = 'Unable to get location. Try clicking on the map instead.';
+                    }
+                    showLocationError(message);
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
