@@ -72,12 +72,20 @@
         }
 
         .intro-section.collapsed {
-            max-height: 50px;
+            max-height: 60px;
+            overflow: hidden;
+        }
+
+        .intro-section.collapsed .intro-content {
+            padding: 0.75rem 2rem;
         }
 
         .intro-section.collapsed .intro-content > *:not(.intro-toggle) {
-            opacity: 0;
-            visibility: hidden;
+            display: none;
+        }
+
+        .intro-section.collapsed .intro-toggle {
+            margin-top: 0;
         }
 
         .intro-section.collapsed .intro-toggle .show-text {
@@ -512,7 +520,7 @@
         </nav>
     </header>
 
-    <div class="intro-section">
+    <div class="intro-section collapsed">
         <div class="intro-content">
             <h2>Understanding Travel Time for Business Success</h2>
             <p>Travel time isochrones reveal the true reach of your business location. Unlike simple radius maps, isochrones show the actual areas reachable within specific time frames—accounting for road networks, traffic patterns, and geographic barriers.</p>
