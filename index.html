@@ -63,10 +63,108 @@
             background: #293bb9;
         }
 
+        .intro-section {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            max-height: 400px;
+        }
+
+        .intro-section.collapsed {
+            max-height: 50px;
+        }
+
+        .intro-section.collapsed .intro-content > *:not(.intro-toggle) {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-section.collapsed .intro-toggle .show-text {
+            display: none;
+        }
+
+        .intro-section.collapsed .intro-toggle .hide-text {
+            display: inline;
+        }
+
+        .intro-section .intro-toggle .hide-text {
+            display: none;
+        }
+
+        .intro-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+
+        .intro-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #293bb9;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .intro-content > p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            max-width: 800px;
+        }
+
+        .intro-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-point {
+            background: #f7f7f7;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #52a839;
+        }
+
+        .intro-point strong {
+            display: block;
+            color: #293bb9;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .intro-point span {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .intro-toggle {
+            background: none;
+            border: none;
+            color: #293bb9;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0.5rem 0;
+            text-decoration: underline;
+        }
+
+        .intro-toggle:hover {
+            color: #ed7200;
+        }
+
         .main-container {
             display: grid;
             grid-template-columns: 320px 1fr;
             height: calc(100vh - 80px);
+        }
+
+        .intro-section + .main-container {
+            height: calc(100vh - 80px - 200px);
+        }
+
+        .intro-section.collapsed + .main-container {
+            height: calc(100vh - 80px - 50px);
         }
 
         .sidebar {
@@ -300,10 +398,39 @@
         </nav>
     </header>
 
+    <div class="intro-section">
+        <div class="intro-content">
+            <h2>Understanding Travel Time for Business Success</h2>
+            <p>Travel time isochrones reveal the true reach of your business location. Unlike simple radius maps, isochrones show the actual areas reachable within specific time frames—accounting for road networks, traffic patterns, and geographic barriers.</p>
+            <div class="intro-points">
+                <div class="intro-point">
+                    <strong>Site Selection</strong>
+                    <span>Evaluate potential locations by visualizing customer and employee accessibility</span>
+                </div>
+                <div class="intro-point">
+                    <strong>Market Analysis</strong>
+                    <span>Understand your true service area and identify underserved markets</span>
+                </div>
+                <div class="intro-point">
+                    <strong>Workforce Planning</strong>
+                    <span>Assess the labor pool within commuting distance of your facility</span>
+                </div>
+                <div class="intro-point">
+                    <strong>Competitive Advantage</strong>
+                    <span>Compare accessibility against competitors to find strategic opportunities</span>
+                </div>
+            </div>
+            <button class="intro-toggle" onclick="this.parentElement.parentElement.classList.toggle('collapsed')">
+                <span class="show-text">Hide Introduction</span>
+                <span class="hide-text">Show Introduction</span>
+            </button>
+        </div>
+    </div>
+
     <div class="main-container">
         <aside class="sidebar">
             <div class="info-banner">
-                This page uses pre-cached data. No API calls needed.
+                Select locations below to view travel time areas. No API calls needed.
             </div>
 
             <div class="panel">
